@@ -12,7 +12,7 @@ var chainReducer = exports.chainReducer = function chainReducer() {
 		return reducersList.reduceRight(function (prevReducer, currentReducer) {
 			return function (state) {
 				if (typeof currentReducer !== "function") {
-					currentReducer = initReducerStateAs(currentReducer);
+					currentReducer = initStateAs(currentReducer);
 				}
 				return currentReducer(prevReducer(state, action), action);
 			};
@@ -22,7 +22,7 @@ var chainReducer = exports.chainReducer = function chainReducer() {
 	};
 };
 
-var initReducerStateAs = exports.initReducerStateAs = function initReducerStateAs(initizer) {
+var initStateAs = exports.initStateAs = function initStateAs(initizer) {
 	return function (state) {
 		return state || initizer;
 	};

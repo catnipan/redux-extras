@@ -1,14 +1,13 @@
-
-export const chainReducers = (...reducersList) => (state, action) => {
+export const chainReducer = (...reducersList) => (state, action) => {
 	return reducersList.reduceRight((prevReducer, currentReducer) => state => {
 		if(typeof currentReducer !== "function"){
-			currentReducer = initReducerStateAs(currentReducer);
+			currentReducer = initStateAs(currentReducer);
 		}
 		return currentReducer(prevReducer(state, action), action)
 	}, state => state)(state);
 }
 
-export const initReducerStateAs = initizer => state => {
+export const initStateAs = initizer => state => {
 	return state || initizer;
 }
 
@@ -19,7 +18,7 @@ export const reducerForType = (type, reducer) => (state, action) => {
 	return state;
 }
 
-export const makeReducerFrom = reducerMap => (state, action) => {
+export const makeReducer = reducerMap => (state, action) => {
 	if(reducerMap[action.type]){
 		return reducerMap[action.type](state, action);
 	} else {
