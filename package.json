@@ -1,0 +1,28 @@
+{
+  "name": "redux-extras",
+  "version": "1.0.0",
+  "description": "Utility functions for making redux use easier",
+  "main": "dist/index.js",
+  "scripts": {
+	"test": "echo \"Error: no test specified\" && exit 1",
+	"build": "babel -o dist/index.js src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catnipan/redux-extras.git"
+  },
+  "keywords": [
+    "redux",
+    "chain"
+  ],
+  "author": "Yifan Pan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/catnipan/redux-extras/issues"
+  },
+  "homepage": "https://github.com/catnipan/redux-extras#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
