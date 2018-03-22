@@ -13,7 +13,11 @@
   },
   "keywords": [
     "redux",
-    "chain"
+	"chain",
+	"compose",
+	"reducer",
+	"utility function",
+	"helper"
   ],
   "author": "Yifan Pan <yifan@catnipan.com>",
   "license": "MIT",

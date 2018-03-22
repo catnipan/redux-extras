@@ -99,7 +99,7 @@ chainReducer(
 
 ## Thanks
 
-The idea of type pattern comes from [redux-saga](https://github.com/redux-saga/redux-saga).
+The idea of type pattern comes from [redux-saga](https://redux-saga.js.org/docs/api/index.html#takepattern).
 
 ## License
 
