@@ -8,7 +8,7 @@ npm install --save redux-extras
 ```
 
 ## Usage
-### `chainReducer`
+### `chainReducer(reducerA, reducerB, reducerC ...)`
 
 accepts a list of reducer functions and generating a new reducer, which works like the state being applied to those reducers from right to left.
 
@@ -24,9 +24,9 @@ function (state, action){
 }
 ```
 
-### `initStateAs`
+### `initStateAs(initState)`
 
-used for initiation when using chainReducer, make sure it be the last argument.
+`initState` is the start state object. Used for initiation with chainReducer, make sure it be the last argument.
 
 ```js
 chainReducer(reducerA, initStateAs(initState))
@@ -46,9 +46,19 @@ function reducerA(state = initState, action){
 }
 ```
 
-### `reducerForType`
+### `reducerForType(typePattern, reducer)`
 
-another approach to "if-else type ===" or "switch case default" operations. Combing with `chainReducer` helps you split your code logic into seperate files. If the action type doesn't match, it ignores it and move to the next reducer in the chain. 
+another approach to "if-else type ===" or "switch case default" operations. 
+
+`typePattern` is interpreted as
+
+- If `typePattern` is  `'*'` then it does not any filter type.
+- If it is a function, then type is matched if `typePattern(action)` is true (e.g. `typePattern(action => action.num > 0, reducer)` will match all actions having positive `num` field.)
+- If it is a String, the action is matched if `action.type === typePattern` (e.g. `take("INC", reducer)`
+- If it is an array, each item in the array is matched with above rules, so the mixed array of strings and function predicates is supported. (e.g.`reducerForType(["INC", "DEC"], reducer)` and that would match either actions of type `"INC"` or `"DEC"`).
+
+
+Combing with `chainReducer` helps you split your code logic into seperate files. If the action type doesn't match, it ignores it and move to the next reducer in the chain. 
 
 ```js
 chainReducer(
@@ -86,6 +96,10 @@ chainReducer(
 	initState
 )
 ```
+
+## Thanks
+
+The idea of type pattern comes from [redux-saga](https://github.com/redux-saga/redux-saga).
 
 ## License
 
