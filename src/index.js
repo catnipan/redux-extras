@@ -11,16 +11,33 @@ export const initStateAs = initizer => state => {
 	return state || initizer;
 }
 
-function testType(type, action){
-	if(type === "*") return true;
-	if(typeof type === "string") return (action.type === type);
-	if(typeof type === "function") return type(action);
-	if(Array.isArray(type)) return type.some(oneType => testType(oneType, action));
+function testType(typePattern, action){
+	if(typePattern === "*") return true;
+	if(typeof typePattern === "string") return (action.type === typePattern);
+	if(typeof typePattern === "function") return typePattern(action);
+	if(Array.isArray(typePattern)) return typePattern.some(oneType => testType(oneType, action));
 }
 
-export const reducerForType = (type, reducer) => (state, action) => {
-	if(testType(type, action)){
+export const reducerForType = (typePattern, reducer) => (state, action) => {
+	if(testType(typePattern, action)){
 		return reducer(state, action) || state; // when you forget to return default state under '*';
+	}
+	return state;
+}
+
+export const reducerWhenState = (statePattern, reducer) => (state, action) => {
+	if(typeof statePattern !== "function"){
+		throw new Error("state Pattern must be a function");
+	}
+	if(statePattern(state)){
+		return reducer(state, action);
+	}
+	return state;
+}
+
+export const combineReducer = (reducerMap) => (state, action) => {
+	for(let key in reducerMap){
+		state[key] = reducerMap[key](state[key], action);
 	}
 	return state;
 }
