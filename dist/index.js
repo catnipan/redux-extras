@@ -28,18 +28,18 @@ var initStateAs = exports.initStateAs = function initStateAs(initizer) {
 	};
 };
 
-function testType(type, action) {
-	if (type === "*") return true;
-	if (typeof type === "string") return action.type === type;
-	if (typeof type === "function") return type(action);
-	if (Array.isArray(type)) return type.some(function (oneType) {
+function testType(typePattern, action) {
+	if (typePattern === "*") return true;
+	if (typeof typePattern === "string") return action.type === typePattern;
+	if (typeof typePattern === "function") return typePattern(action);
+	if (Array.isArray(typePattern)) return typePattern.some(function (oneType) {
 		return testType(oneType, action);
 	});
 }
 
-var reducerForType = exports.reducerForType = function reducerForType(type, reducer) {
+var reducerForType = exports.reducerForType = function reducerForType(typePattern, reducer) {
 	return function (state, action) {
-		if (testType(type, action)) {
+		if (testType(typePattern, action)) {
 			return reducer(state, action) || state; // when you forget to return default state under '*';
 		}
 		return state;
